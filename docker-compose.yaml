@@ -36,20 +36,30 @@ services:
     image: axiangcoding/axbot-server:${AXBOT_TAG}
     ports:
       - "8888:8888"
+    volumes:
+      - "./volume/server:/data"
     environment:
-      - SRPING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/axbot
-      - SRPING_DATASOURCE_USERNAME=${DB_USER}
-      - SRPING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/axbot
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
       - SPRING_DATA_REDIS_URL=redis://redis:6379
       - SPRING_RABBITMQ_HOST=rabbitmq
       - SPRING_RABBITMQ_PORT=5672
       - SPRING_RABBITMQ_USERNAME=${MQ_USER}
       - SPRING_RABBITMQ_PASSWORD=${MQ_PASSWORD}
       - KOOK_BOT_TOKEN=${KOOK_BOT_TOKEN}
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
   crawler:
     image: axiangcoding/axbot-crawler:${AXBOT_TAG}
+    volumes:
+      - ./volume/crawler/shm/:/dev/shm
     environment:
       - PIKA_HOST=rabbitmq
       - PIKA_PORT=5672
       - PIKA_USER=${MQ_USER}
       - PIKA_PASS=${MQ_PASSWORD}
+    depends_on:
+      - rabbitmq

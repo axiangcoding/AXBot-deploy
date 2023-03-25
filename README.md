@@ -1,0 +1,1 @@
+# this repo helps user to deploy axbot in easy mode
