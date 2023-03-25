@@ -1,0 +1,55 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: axbot
+    volumes:
+      - ./volume/postgres:/var/lib/postgresql/data
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+  # 暂没有集成cqhttp，不用部署
+  # cqhttp:
+  #   image: ghcr.io/mrs4s/go-cqhttp:1.0.0-rc5
+  #   ports:
+  #     - "5700:5700"
+  #   volumes:
+  #     - "./volume/cqhttp/:/data/"
+  #   # entrypoint: [ "tail", "-f", "/dev/null" ]
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - "./volume/rabbitmq/:/var/lib/rabbitmq"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${MQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${MQ_PASSWORD}
+  server:
+    image: axiangcoding/axbot-server:${AXBOT_TAG}
+    ports:
+      - "8888:8888"
+    environment:
+      - SRPING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/axbot
+      - SRPING_DATASOURCE_USERNAME=${DB_USER}
+      - SRPING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_DATA_REDIS_URL=redis://redis:6379
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=${MQ_USER}
+      - SPRING_RABBITMQ_PASSWORD=${MQ_PASSWORD}
+      - KOOK_BOT_TOKEN=${KOOK_BOT_TOKEN}
+  crawler:
+    image: axiangcoding/axbot-crawler:${AXBOT_TAG}
+    environment:
+      - PIKA_HOST=rabbitmq
+      - PIKA_PORT=5672
+      - PIKA_USER=${MQ_USER}
+      - PIKA_PASS=${MQ_PASSWORD}
