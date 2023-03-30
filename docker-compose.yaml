@@ -48,6 +48,7 @@ services:
       - SPRING_RABBITMQ_USERNAME=${MQ_USER}
       - SPRING_RABBITMQ_PASSWORD=${MQ_PASSWORD}
       - KOOK_BOT_TOKEN=${KOOK_BOT_TOKEN}
+      - KOOK_VERIFY_TOKEN=${KOOK_VERIFY_TOKEN}
     depends_on:
       - postgres
       - redis
