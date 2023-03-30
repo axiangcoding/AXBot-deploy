@@ -32,12 +32,12 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=${MQ_USER}
       - RABBITMQ_DEFAULT_PASS=${MQ_PASSWORD}
-  server:
-    image: axiangcoding/axbot-server:${AXBOT_TAG}
+  core:
+    image: axiangcoding/axbot-core:${AXBOT_TAG}
     ports:
       - "8888:8888"
     volumes:
-      - "./volume/server:/data"
+      - "./volume/core:/data"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/axbot
       - SPRING_DATASOURCE_USERNAME=${DB_USER}
