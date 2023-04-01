@@ -49,6 +49,11 @@ services:
       - SPRING_RABBITMQ_PASSWORD=${MQ_PASSWORD}
       - KOOK_BOT_TOKEN=${KOOK_BOT_TOKEN}
       - KOOK_VERIFY_TOKEN=${KOOK_VERIFY_TOKEN}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8888/api/v1/system/health || exit 1"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
     depends_on:
       - postgres
       - redis
