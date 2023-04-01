@@ -50,10 +50,10 @@ services:
       - KOOK_BOT_TOKEN=${KOOK_BOT_TOKEN}
       - KOOK_VERIFY_TOKEN=${KOOK_VERIFY_TOKEN}
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8888/api/v1/system/health || exit 1"]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
+      test: ["CMD", "curl", "-f", "http://localhost:8888/api/v1/system/health"]
+      interval: 5s
+      timeout: 60s
+      retries: 20
     depends_on:
       - postgres
       - redis
