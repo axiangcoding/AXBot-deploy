@@ -47,8 +47,9 @@ services:
       - SPRING_RABBITMQ_PORT=5672
       - SPRING_RABBITMQ_USERNAME=${MQ_USER}
       - SPRING_RABBITMQ_PASSWORD=${MQ_PASSWORD}
-      - KOOK_BOT_TOKEN=${KOOK_BOT_TOKEN}
-      - KOOK_VERIFY_TOKEN=${KOOK_VERIFY_TOKEN}
+      - BOT_KOOK_BOT_TOKEN=${KOOK_BOT_TOKEN}
+      - BOT_KOOK_VERIFY_TOKEN=${KOOK_VERIFY_TOKEN}
+      - BOT_CQHTTP_SECRET=${CQHTTP_SECRET}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8888/api/v1/system/health"]
       interval: 5s
