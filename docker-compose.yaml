@@ -14,14 +14,14 @@ services:
     image: redis:7-alpine
     ports:
       - "6379:6379"
-  # 暂没有集成cqhttp，不用部署
-  # cqhttp:
-  #   image: ghcr.io/mrs4s/go-cqhttp:1.0.0-rc5
-  #   ports:
-  #     - "5700:5700"
-  #   volumes:
-  #     - "./volume/cqhttp/:/data/"
-  #   # entrypoint: [ "tail", "-f", "/dev/null" ]
+  cqhttp:
+    image: ghcr.io/mrs4s/go-cqhttp:1.0.1
+    ports:
+      - "5700:5700"
+    volumes:
+      - "./volume/cqhttp/:/data/"
+    environment:
+      - FORCE_TTY=true
   rabbitmq:
     image: rabbitmq:3-management-alpine
     ports:
