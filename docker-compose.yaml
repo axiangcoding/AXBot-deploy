@@ -50,6 +50,7 @@ services:
       - BOT_KOOK_BOT_TOKEN=${KOOK_BOT_TOKEN}
       - BOT_KOOK_VERIFY_TOKEN=${KOOK_VERIFY_TOKEN}
       - BOT_CQHTTP_SECRET=${CQHTTP_SECRET}
+      - BOT_CQHTTP_BASE_URL=${CQHTTP_BASE_URL}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8888/api/v1/system/health"]
       interval: 5s
