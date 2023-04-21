@@ -62,7 +62,8 @@ services:
       - rabbitmq
   crawler:
     image: axiangcoding/axbot-crawler:${AXBOT_TAG}
-    replicas: 3
+    deploy:
+      replicas: 3
     volumes:
       - ./volume/crawler/shm/:/dev/shm
     environment:
