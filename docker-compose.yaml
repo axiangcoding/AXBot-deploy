@@ -54,6 +54,7 @@ services:
       - BOT_CENSOR_QINIU_ACCESS_TOKEN=${QINIU_ACCESS_TOKEN}
       - BOT_CENSOR_QINIU_SECRET_TOKEN=${QINIU_SECRET_TOKEN}
       - BOT_OPENAI_API_KEY=${OPENAI_API_KEY}
+      - BOT_BOT_MARKET_UUID=${BOT_MARKET_UUID}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8888/api/v1/system/health"]
       interval: 5s
