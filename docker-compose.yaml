@@ -75,5 +75,6 @@ services:
       - PIKA_PORT=5672
       - PIKA_USER=${MQ_USER}
       - PIKA_PASS=${MQ_PASSWORD}
+      - DRIVER_EXECUTABLE_PATH=/usr/bin/chromedriver
     depends_on:
       - rabbitmq
